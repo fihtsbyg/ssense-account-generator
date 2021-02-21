@@ -10,6 +10,8 @@ from discord_webhook import DiscordWebhook, DiscordEmbed
 import names
 import email
 from urllib.parse import unquote
+from fp.fp import FreeProxy
+import dotenv
 
 startup = '''
     ("------------------------------------------------")
@@ -36,10 +38,11 @@ print(Fore.MAGENTA, logo)
 with open('config.json') as json_data:
     config = json.load(json_data)
 
+CONFIG = dotenv.dotenv_values()
+
 catchall = config['catchall']
 password = config['password']
 url = config['url']
-
 init(autoreset=True)
 
 test1 = int(input("How many accounts would you like to make?: "))
@@ -48,7 +51,13 @@ threadMax = int(test1)
 class logger:
     printLock = threading.Lock()
 
-def create(): 
+def create():
+    #proxy
+    proxy_no = 0
+    proxyObject = FreeProxy(country_id=[CONFIG['LOCATION']], rand=True)
+    proxy_list = CONFIG['PROXY'].split('%')
+    proxy = {"http": f"http://{proxyObject.get()}"} if proxy_list[0] == "" else {"http": f"http://{proxy_list[proxy_no]}"}
+    
     rand_fname = names.get_first_name()
     rand_lname = names.get_last_name()
     global email 
@@ -65,8 +74,8 @@ def create():
 
 
     #REQUESTS MADE TO SSENSE
-    response = requests.request("POST", url, headers=headers, data=payload)
-    accmade = requests.request("POST", url, headers=headers, data=payload)
+    response = requests.request("POST", url, headers=headers, data=payload, proxies=proxy)
+    accmade = requests.request("POST", url, headers=headers, data=payload, proxies=proxy)
     account = (accmade.text)
 
     with logger.printLock:

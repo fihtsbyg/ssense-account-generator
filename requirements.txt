@@ -4,3 +4,5 @@ discord-webhook==0.11.0
 names==0.3.0
 requests==2.23.0
 urllib3==1.25.11
+free-proxy==1.0.2
+python-dotenv==0.14.0

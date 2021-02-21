@@ -1,4 +1,4 @@
-# Ssense Account Generator
+# Ssense Account Generator by ANTI
 
 this program will help you to create 1000's of ssense accounts for your botting needs :) 
 

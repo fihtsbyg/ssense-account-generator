@@ -92,7 +92,7 @@ def create():
             
     else:
         with logger.printLock:
-            print(time.strftime("[%H:%M:%S]") + Fore.RED + "[+] ACCOUNT NOT MADE")
+            print(time.strftime("[%H:%M:%S]") + Fore.RED + "[+] BLOCKED")
 
 def thread():
     ask = input("Would you like to begin account generation? (y/n)")
